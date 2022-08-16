@@ -70,7 +70,7 @@ app.post("/pay", (req, res) => {
 });
 
 app.get("/success", (req, res) => {
-//   console.log(req.query); // for testing
+  //   console.log(req.query); // for testing
   const { PayerID } = req.query;
   const { paymentId } = req.query;
 
@@ -87,26 +87,30 @@ app.get("/success", (req, res) => {
     ],
   };
 
-  paypal.payment.execute(
-    paymentId,
-    execute_payment_json,
-    function (error, payment) {
-      if (error) {
-        console.log(error.response);
-        throw error;
-      } else {
-        console.log(payment);
-        // to be put in the database later
-        console.log(JSON.stringify(payment));
-        res.send("Success");
+  try {
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function (error, payment) {
+        if (error) {
+          console.log(error.response);
+          throw error;
+        } else {
+          console.log(payment);
+          // to be put in the database later
+          console.log(JSON.stringify(payment));
+          res.send("Success");
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    console.error(error);
+  }
 });
 
-// app.get("/cancel", (req, res) => {
-//   res.send("Payment process cancelled");
-// });
+app.get("/cancel", (req, res) => {
+  res.send("Payment process cancelled");
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`App's running`));
