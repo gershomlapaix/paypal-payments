@@ -87,21 +87,21 @@ app.get("/success", (req, res) => {
     ],
   };
 
-//   paypal.payment.execute(
-//     paymentId,
-//     execute_payment_json,
-//     function (error, payment) {
-//       if (error) {
-//         console.log(error.response);
-//         throw error;
-//       } else {
-//         console.log(payment);
-//         // to be put in the database later
-//         console.log(JSON.stringify(payment));
-//         res.send("Success");
-//       }
-//     }
-//   );
+  paypal.payment.execute(
+    paymentId,
+    execute_payment_json,
+    function (error, payment) {
+      if (error) {
+        console.log(error.response);
+        throw error;
+      } else {
+        console.log(payment);
+        // to be put in the database later
+        console.log(JSON.stringify(payment));
+        res.send("Success");
+      }
+    }
+  );
 });
 
 // app.get("/cancel", (req, res) => {
